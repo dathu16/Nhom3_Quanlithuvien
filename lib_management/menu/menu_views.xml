@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- Move Discuss menu sequence from 0 to 1 -->
+        <!-- help set Quản lý thư viện menu to first menu -->
+        <record id="mail.menu_root_discuss" model="ir.ui.menu">
+            <field name="sequence" eval="1"/>
+        </record>
+
+        <menuitem id="library_menu_view" name="Quản lý thư viện" sequence="0"/>
+
+        <!-- Quản lý thư viện >> menu lv1 -->
+        <menuitem id="book_menu_view"
+                  name="Đầu sách"
+                  action=""
+                  parent="library_menu_view" sequence="1"/>
+
+        <menuitem id="library_borrowing_book_management_menu"
+                  name="Mượn/Trả sách"
+                  action=""
+                  parent="library_menu_view" sequence="10"/>
+
+        <menuitem id="library_violation_management_management_menu"
+                  name="Vi phạm"
+                  action=""
+                  parent="library_menu_view" sequence="20"/>
+
+        <menuitem id="library_report_management"
+                  name="Báo Cáo"
+                  groups=""
+                  parent="library_menu_view" sequence="80"/>
+
+        <menuitem id="library_call_card_report_management"
+                  name="Phiếu mượn sách"
+                  action=""
+                  groups="lib_management.lib_librarian_group,lib_management.lib_admin_group"
+                  parent="library_report_management" sequence="1"/>
+
+        <menuitem id="library_violation_report_management"
+                  name="Vi phạm"
+                  action=""
+                  groups="lib_management.lib_librarian_group,lib_management.lib_admin_group"
+                  parent="library_report_management" sequence="1"/>
+
+        <menuitem id="library_config_management"
+                  name="Quản lý"
+                  groups="lib_management.lib_librarian_group,lib_management.lib_admin_group"
+                  parent="library_menu_view" sequence="100"/>
+
+        <!-- Quản lý thư viện >> Configuration >> menu lv2 -->
+        <menuitem id="library_reader_management_menu"
+                  name="Quản lý độc giả"
+                  action=""
+                  groups="lib_management.lib_librarian_group,lib_management.lib_admin_group"
+                  parent="library_config_management" sequence="1"/>
+
+        <menuitem id="library_book_category_menu"
+                  name="Loại đầu sách"
+                  action=""
+                  groups="lib_management.lib_librarian_group,lib_management.lib_admin_group"
+                  parent="library_config_management" sequence="30"/>
+
+        <menuitem id="library_budget_management_menu"
+                  name="Quản lý ngăn sách"
+                  action=""
+                  groups="lib_management.lib_librarian_group,lib_management.lib_admin_group"
+                  parent="library_config_management" sequence="100"/>
+    </data>
+</odoo>
