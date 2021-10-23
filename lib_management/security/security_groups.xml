@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="module_category_lib_management">
+            <field name="name">Library</field>
+            <field name="sequence">1</field>
+            <field name="visible" eval="0" />
+        </record>
+
+        <record id="lib_reader_group" model="res.groups">
+            <field name="name">Reader</field>
+            <field name="category_id" ref="lib_management.module_category_lib_management"/>
+        </record>
+
+        <record id="lib_librarian_group" model="res.groups">
+            <field name="name">Librarian</field>
+            <field name="category_id" ref="lib_management.module_category_lib_management"/>
+        </record>
+
+        <record id="lib_admin_group" model="res.groups">
+            <field name="name">Admin</field>
+            <field name="category_id" ref="lib_management.module_category_lib_management"/>
+            <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        </record>
+
+    </data>
+</odoo>
