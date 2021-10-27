@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="violation_tree_view" model="ir.ui.view">
+            <field name="name">violation.tree.view</field>
+            <field name="model">violation</field>
+            <field name="arch" type="xml">
+                <tree string="Vi phạm">
+                    <field name="name"/>
+                    <field name="reader_id"/>
+                    <field name="call_card_id"/>
+                    <field name="handler_id"/>
+                    <field name="violation_date"/>
+                    <field name="reason"/>
+                    <field name="violation_money"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="violation_search_view" model="ir.ui.view">
+            <field name="name">violation.search.view</field>
+            <field name="model">violation</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm vi phạm">
+                    <field name="name"/>
+                    <field name="reader_id"/>
+                    <field name="call_card_id"/>
+                    <field name="handler_id"/>
+                    <field name="violation_date"/>
+                    <field name="violation_money"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="violation_form_view" model="ir.ui.view">
+            <field name="name">violation.form.view</field>
+            <field name="model">violation</field>
+            <field name="arch" type="xml">
+                <form string="Vi phạm">
+                    <header>
+                        <button name="action_start_to_inprogress" groups="lib_management.lib_librarian_group,lib_management.lib_admin_group"
+                                string="Bắt đầu xử lý" states="draft" type="object" class="oe_highlight"/>
+                        <button name="action_done" groups="lib_management.lib_librarian_group,lib_management.lib_admin_group"
+                                string="Đã xử lý" states="inprogress" type="object" class="oe_highlight"/>
+                        <button name="action_close" groups="lib_management.lib_librarian_group,lib_management.lib_admin_group"
+                                string="Đóng không xử lý" states="draft,inprogress" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,inprogress,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label class="oe_edit_only"
+                                   for="name" string="Mã số vi phạm"/>
+                            <h1><field name="name" readonly="1" force_save="1"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="reader_id"
+                                       attrs="{'readonly': [('state', 'in', ['done', 'closed'])]}"/>
+                                <field name="call_card_id" domai="[('reader_id', '=', reader_id)]"
+                                       attrs="{'readonly': [('state', 'in', ['done', 'closed'])]}"/>
+                            </group>
+                            <group>
+                                <field name="handler_id"
+                                       attrs="{'readonly': [('state', 'in', ['done', 'closed'])]}"/>
+                                <field name="violation_date"
+                                       attrs="{'readonly': [('state', 'in', ['done', 'closed'])]}"/>
+                                <field name="violation_money"
+                                       attrs="{'readonly': [('state', 'in', ['done', 'closed'])]}"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="date_of_rov"
+                                       attrs="{'invisible': [('state', 'not in', ['inprogress', 'done', 'close'])]}"/>
+                                <field name="date_done"
+                                       attrs="{'invisible': [('state', 'not in', ['done'])]}"/>
+                            </group>
+                        </group>
+                        <label for="reason" string="Lý do vi phạm"/>
+                        <field name="reason"
+                               attrs="{'readonly': [('state', 'in', ['done', 'closed'])]}"/>
+                        <label for="comment" string="Ghi chú"/>
+                        <field name="comment"
+                               attrs="{'readonly': [('state', 'in', ['done', 'closed'])]}"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="violation_action_view" model="ir.actions.act_window">
+            <field name="name">Vi phạm</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">violation</field>
+            <field name="search_view_id" ref="lib_management.violation_search_view"/>
+            <field name="view_id" ref="lib_management.violation_tree_view"/>
+        </record>
+    </data>
+</odoo>
