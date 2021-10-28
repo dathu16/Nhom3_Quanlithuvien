@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="shelve_search_view" model="ir.ui.view">
+            <field name="name">shelve.search.view</field>
+            <field name="model">shelve</field>
+            <field name="arch" type="xml">
+                <search string="Ngăn Sách">
+                    <field name="name"/>
+                    <filter string="Hoạt Động" name="fb_active" domain="[('active', '=', True)]"/>
+                    <filter string="Không Hoạt Động" name="fb_non_active" domain="[('active', '=', False)]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="shelve_form_view" model="ir.ui.view">
+            <field name="name">shelve.form.view</field>
+            <field name="model">shelve</field>
+            <field name="arch" type="xml">
+                <form class="oe_form_configuration">
+                    <header>
+                        <button name="action_inactive" string="Vô hiệu hóa" type="object"
+                                groups="lib_management.lib_librarian_group,lib_management.lib_admin_group"
+                                attrs="{'invisible': [('active', '=', False)]}"/>
+                        <button name="action_active" string="Hoạt động trở lại"
+                                groups="lib_management.lib_librarian_group,lib_management.lib_admin_group"
+                                type="object" class="oe_highlight"
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="active"/>
+                            </group>
+                            <group/>
+                        </group>
+                        <label for="description" string="Mô tả"/>
+                        <field name="description"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="shelve_tree_view" model="ir.ui.view">
+            <field name="name">shelve.tree.view</field>
+            <field name="model">shelve</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="shelve_act_window" model="ir.actions.act_window">
+            <field name="name">Ngăn sách</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">shelve</field>
+            <field name="search_view_id" ref="lib_management.shelve_search_view"/>
+            <field name="view_id" ref="lib_management.shelve_tree_view"/>
+        </record>
+    </data>
+</odoo>
