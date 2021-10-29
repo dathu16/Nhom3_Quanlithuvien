@@ -1,0 +1,151 @@
+/* Header */
+.o_main_navbar {
+    position: relative;
+    height: 46px;
+    border-bottom: 1px solid #73b2fd;
+    background-color: #73b2fd;
+    color: white;
+}
+
+.o_main_navbar .show .dropdown-toggle {
+    background-color: #73b2fd;
+}
+
+/*High*/
+nav#oe_main_menu_navbar.o_main_navbar {
+    background-color: red;
+}
+
+/* Links */
+.a {
+    color: #7C7BAD !important;
+}
+
+a:hover {
+    color: #7C7BAD;
+    text-decoration: none;
+}
+
+a.dropdown-toggle:hover, a.o_menu_brand, a.o_debug_mode {
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #73b2fd !important;
+}
+
+a.o_menu_entry_lvl_1:hover, li.dropdown:hover, a.full:hover{
+    background-color: #73b2fd !important;
+}
+
+/* i */
+/* Icon */
+.fa {
+    color: #73b2fd;
+}
+
+i.fa.fa-th-large {
+    color: #FFFFFF;
+    background-color: #73b2fd !important;
+}
+
+i.fa.fa-clock-o {
+    background-color: #73b2fd;
+    color: #FFFFFF;
+}
+
+i.fa.fa-comments {
+    background-color: #73b2fd;
+    color: #FFFFFF;
+}
+
+span.fa.fa-bug {
+    background-color: #73b2fd;
+    color: #FFFFFF;
+}
+
+/* Button */
+.btn-primary {
+    color: #FFFFFF;
+    background-color: #73b2fd;
+    border-color: #73b2fd;
+}
+
+.btn-primary:hover {
+    color: #FFFFFF;
+    background-color: #73b2fd;
+    border-color: #73b2fd;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+    color: #FFFFFF;
+    background-color: #73b2fd;
+    border-color: #73b2fd;
+}
+/* Search */
+.o_searchview .o_searchview_facet .o_searchview_facet_label {
+    background-color: #73b2fd;
+}
+
+.o_searchview .o_searchview_autocomplete li.o-selection-focus {
+    background-color: #73b2fd;
+}
+/* Body */
+body {
+    font-family: 'Source Sans Pro', sans-serif !important;
+    font-size: 1.28699934rem !important;
+}
+
+.dropdown-menu {
+    font-size: 1.1916663rem !important;
+}
+/* Web avatar */
+.o_form_view .oe_avatar > img {
+    max-height: 110px;
+    max-width: 110px;
+    border-radius: 50%;
+}
+
+.o_form_view .oe_avatar + .oe_title {
+    padding-left: 130px;
+}
+
+.o_form_view .o_horizontal_separator {
+    color: #73b2fd;
+}
+
+/* Label */
+label.o_form_label, label.o_form_label.o_form_label_empty {
+    font-size: 1.28699934rem !important;
+}
+
+/*Button*/
+button.btn.btn-primary, button.btn.btn-secondary,
+button.btn.o_arrow_button.btn-secondary {
+    font-size: 1.18rem;
+}
+
+.o_form_view .o_form_statusbar > .o_statusbar_status > .o_arrow_button {
+    font-size: 12px !important;
+}
+
+.o_form_view .o_form_statusbar > .o_statusbar_status > .o_arrow_button.btn-primary.disabled {
+    font-size: 12px !important;
+}
+
+.o_form_view .oe_button_box .oe_stat_button .o_stat_info .o_stat_text, .o_form_view .oe_button_box .oe_stat_button > span .o_stat_text {
+    font-size: 13px;
+}
+
+/* Kanban*/
+.o_kanban_view .o_kanban_record .o_kanban_record_title {
+    font-size: 14px;
+}
+
+.o_kanban_view .oe_kanban_card .o_field_many2manytags .o_tag, .o_kanban_view .oe_kanban_card .o_kanban_tags .o_tag, .o_kanban_view .o_kanban_record .o_field_many2manytags .o_tag, .o_kanban_view .o_kanban_record .o_kanban_tags .o_tag {
+    font-size: 13px;
+}
+
+/* Loading */
+.o_loading {
+    background-color: #73b2fd;
+    color: #FFFFFF;
+}

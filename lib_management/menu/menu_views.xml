@@ -12,33 +12,33 @@
         <!-- Quản lý thư viện >> menu lv1 -->
         <menuitem id="book_menu_view"
                   name="Đầu sách"
-                  action=""
+                  action="lib_management.lib_management_product_template_action"
                   parent="library_menu_view" sequence="1"/>
 
         <menuitem id="library_borrowing_book_management_menu"
                   name="Mượn/Trả sách"
-                  action=""
+                  action="lib_management.call_card_action_view"
                   parent="library_menu_view" sequence="10"/>
 
         <menuitem id="library_violation_management_management_menu"
                   name="Vi phạm"
-                  action=""
+                  action="lib_management.violation_action_view"
                   parent="library_menu_view" sequence="20"/>
 
         <menuitem id="library_report_management"
                   name="Báo Cáo"
-                  groups=""
+                  groups="lib_management.lib_librarian_group,lib_management.lib_admin_group"
                   parent="library_menu_view" sequence="80"/>
 
         <menuitem id="library_call_card_report_management"
                   name="Phiếu mượn sách"
-                  action=""
+                  action="lib_management.call_card_report_action_view"
                   groups="lib_management.lib_librarian_group,lib_management.lib_admin_group"
                   parent="library_report_management" sequence="1"/>
 
         <menuitem id="library_violation_report_management"
                   name="Vi phạm"
-                  action=""
+                  action="lib_management.violation_report_action_view"
                   groups="lib_management.lib_librarian_group,lib_management.lib_admin_group"
                   parent="library_report_management" sequence="1"/>
 
@@ -50,19 +50,19 @@
         <!-- Quản lý thư viện >> Configuration >> menu lv2 -->
         <menuitem id="library_reader_management_menu"
                   name="Quản lý độc giả"
-                  action=""
+                  action="lib_management.lib_reader_act_window"
                   groups="lib_management.lib_librarian_group,lib_management.lib_admin_group"
                   parent="library_config_management" sequence="1"/>
 
         <menuitem id="library_book_category_menu"
                   name="Loại đầu sách"
-                  action=""
+                  action="lib_management.book_category_action"
                   groups="lib_management.lib_librarian_group,lib_management.lib_admin_group"
                   parent="library_config_management" sequence="30"/>
 
         <menuitem id="library_budget_management_menu"
                   name="Quản lý ngăn sách"
-                  action=""
+                  action="lib_management.shelve_act_window"
                   groups="lib_management.lib_librarian_group,lib_management.lib_admin_group"
                   parent="library_config_management" sequence="100"/>
     </data>

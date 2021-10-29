@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="lib_management_product_template_tree_view" model="ir.ui.view">
+            <field name="name">lib_management.product.template.product.tree</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <tree string="Đầu sách" multi_edit="1" sample="1">
+                    <field name="product_variant_count" invisible="1"/>
+                    <field name="sale_ok" invisible="1"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="cost_currency_id" invisible="1"/>
+                    <field name="sequence" widget="handle" readonly="1"/>
+                    <field name="name" string="Product Name"/>
+                    <field name="default_code" optional="show"/>
+                    <field name="barcode" optional="hide" attrs="{'readonly': [('product_variant_count', '>', 1)]}"/>
+                    <field name="company_id" options="{'no_create_edit': True}"
+                        groups="base.group_multi_company" optional="hide"/>
+                    <field name="list_price" string="Sales Price" widget='monetary' options="{'currency_field': 'currency_id'}" optional="show" decoration-muted="not sale_ok"/>
+                    <field name="standard_price" widget='monetary' options="{'currency_field': 'cost_currency_id'}" optional="show" readonly="1"/>
+                    <field name="categ_id" optional="hide"/>
+                    <field name="type" optional="hide" readonly="1"/>
+                    <field name="uom_id" readonly="1" optional="show" groups="uom.group_uom"/>
+                    <field name="active" invisible="1"/>
+                    <field name="activity_exception_decoration" widget="activity_exception"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="lib_management_product_template_kanban_view" model="ir.ui.view">
+            <field name="name">lib_management.product.template.product.kanban</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <kanban sample="1">
+                    <field name="id"/>
+                    <field name="product_variant_count"/>
+                    <field name="currency_id"/>
+                    <field name="activity_state"/>
+                    <progressbar field="activity_state" colors='{"planned": "success", "today": "warning", "overdue": "danger"}'/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <img t-att-src="kanban_image('product.template', 'image_128', record.id.raw_value)" alt="Product" class="o_image_64_contain"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                    <t t-if="record.default_code.value">[<field name="default_code"/>]</t>
+                                    <div t-if="record.product_variant_count.value &gt; 1" groups="product.group_product_variant">
+                                        <strong>
+                                            <t t-esc="record.product_variant_count.value"/> Variants
+                                        </strong>
+                                    </div>
+                                    <div name="product_lst_price" class="mt-1">
+                                        Price: <field name="lst_price" widget="monetary" options="{'currency_field': 'currency_id', 'field_digits': True}"></field>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="lib_management_product_template_form_view" model="ir.ui.view">
+            <field name="name">lib_management.product.template.common.form</field>
+            <field name="model">product.template</field>
+            <field name="arch" type="xml">
+                <form string="Đầu sách">
+                    <header>
+                        <button string="Configure Variants" type="action"
+                            name="%(product.product_attribute_value_action)d"
+                            attrs="{'invisible': ['|', ('attribute_line_ids', '&lt;=', 0), ('is_product_variant', '=', True)]}"
+                            groups="product.group_product_variant"/>
+                    </header>
+                    <sheet>
+                        <field name='product_variant_count' invisible='1'/>
+                        <field name='is_product_variant' invisible='1'/>
+                        <field name='attribute_line_ids' invisible='1'/>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="%(product.product_variant_action)d" type="action"
+                                icon="fa-sitemap" class="oe_stat_button"
+                                attrs="{'invisible': [('product_variant_count', '&lt;=', 1)]}"
+                                groups="product.group_product_variant">
+                                <field string="Variants" name="product_variant_count" widget="statinfo" />
+                            </button>
+                        </div>
+                        <widget name="web_ribbon" title="Archived" bg_color="bg-danger" attrs="{'invisible': [('active', '=', True)]}"/>
+                        <field name="id" invisible="True"/>
+                        <field name="image_1920" widget="image" class="oe_avatar" options="{'preview_image': 'image_128'}"/>
+                        <div class="oe_title">
+                            <label class="oe_edit_only" for="name" string="Tên đầu sách"/>
+                            <h1><field name="name" placeholder="Tên Đầu Sách"/></h1>
+                        </div>
+                        <notebook>
+                            <page string="Thông tin chung" name="general_information">
+                                <group>
+                                    <group name="group_general">
+                                        <field name="active" invisible="1"/>
+                                        <field name="type" invisible="1"/>
+                                        <field name="shelve_ids"
+                                               widget="many2many_tags"/>
+                                        <field name="categ_id" string="Loại Đầu Sách" options="{'no_open': True}"/>
+                                        <field name="publishing_company"/>
+                                        <field name="default_code" attrs="{'invisible': [('product_variant_count', '>', 1)]}"/>
+                                        <field name="barcode" attrs="{'invisible': [('product_variant_count', '>', 1)]}"/>
+                                    </group>
+                                    <group name="group_standard_price">
+                                        <label for="list_price" string="Giá tiền"/>
+                                        <div name="pricing">
+                                            <field name="list_price" class="oe_inline" widget='monetary'
+                                                   options="{'currency_field': 'currency_id', 'field_digits': True}"/>
+                                        </div>
+                                        <label for="standard_price" groups="base.group_user" invisible="1"
+                                               attrs="{'invisible': [('product_variant_count', '&gt;', 1), ('is_product_variant', '=', False)]}"/>
+                                        <div name="standard_price_uom" groups="base.group_user" invisible="1" attrs="{'invisible': [('product_variant_count', '&gt;', 1), ('is_product_variant', '=', False)]}" class="o_row">
+                                            <field name="standard_price" widget='monetary' options="{'currency_field': 'cost_currency_id', 'field_digits': True}"/>
+                                            <span groups="uom.group_uom" class="oe_read_only">per
+                                                <field name="uom_name"/>
+                                            </span>
+                                        </div>
+                                        <field name="company_id" groups="base.group_multi_company"
+                                            options="{'no_create': True}"/>
+                                        <field name="uom_id" groups="uom.group_uom" options="{'no_create': True}"/>
+                                        <field name="uom_po_id" groups="uom.group_uom" options="{'no_create': True}"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="cost_currency_id" invisible="1"/>
+                                        <field name="product_variant_id" invisible="1"/>
+                                    </group>
+                                </group>
+                                <group string="Mô tả">
+                                    <field name="description" nolabel="1" placeholder="This note is only for internal purposes."/>
+                                </group>
+                            </page>
+                            <page name="variants" string="Thuộc tính" groups="product.group_product_variant">
+                                <field name="attribute_line_ids" widget="one2many" context="{'show_attribute': False}">
+                                    <tree string="Variants" editable="bottom">
+                                        <field name="attribute_id" attrs="{'readonly': [('id', '!=', False)]}"/>
+                                        <field name="value_ids" widget="many2many_tags" options="{'no_create_edit': True}" context="{'default_attribute_id': attribute_id, 'show_attribute': False}"/>
+                                    </tree>
+                                </field>
+                                    <p class="oe_grey oe_edit_only">
+                                    <strong>Warning</strong>: adding or deleting attributes
+                                    will delete and recreate existing variants and lead
+                                    to the loss of their possible customizations.
+                                </p>
+                            </page>
+                            <page string="Inventory" name="inventory" groups="product.group_stock_packaging" attrs="{'invisible':[('type', '=', 'service')]}">
+                                <group name="inventory">
+                                    <group name="group_lots_and_weight" string="Logistics" attrs="{'invisible': [('type', 'not in', ['product', 'consu'])]}">
+                                        <label for="weight" attrs="{'invisible':[('product_variant_count', '>', 1), ('is_product_variant', '=', False)]}"/>
+                                        <div class="o_row" name="weight" attrs="{'invisible':[('product_variant_count', '>', 1), ('is_product_variant', '=', False)]}">
+                                            <field name="weight"/>
+                                            <span><field name="weight_uom_name"/></span>
+                                        </div>
+                                        <label for="volume" attrs="{'invisible':[('product_variant_count', '>', 1), ('is_product_variant', '=', False)]}"/>
+                                        <div class="o_row" name="volume" attrs="{'invisible':[('product_variant_count', '>', 1), ('is_product_variant', '=', False)]}">
+                                            <field name="volume" string="Volume"/>
+                                            <span><field name="volume_uom_name"/></span>
+                                        </div>
+                                    </group>
+                                </group>
+                                <group name="packaging" string="Packaging"
+                                    colspan="4"
+                                    attrs="{'invisible':['|', ('type', 'not in', ['product', 'consu']), ('product_variant_count', '>', 1), ('is_product_variant', '=', False)]}"
+                                    groups="product.group_stock_packaging">
+                                    <field name="packaging_ids" nolabel="1" context="{'tree_view_ref':'product.product_packaging_tree_view2', 'form_view_ref':'product.product_packaging_form_view2'}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="lib_management_product_template_action" model="ir.actions.act_window">
+            <field name="name">Đầu sách</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.template</field>
+            <field name="view_mode">kanban,tree,form</field>
+
+            <field name="view_id" ref="lib_management_product_template_kanban_view"/>
+            <field name="search_view_id" ref="product.product_template_search_view"/>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('lib_management.lib_management_product_template_kanban_view')}),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('lib_management.lib_management_product_template_tree_view')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('lib_management.lib_management_product_template_form_view')}),
+            ]"/>
+            <field name="domain">[('is_book', '=', True)]</field>
+            <field name="context">{'default_is_book': True}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Tạo mới đầu sách
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

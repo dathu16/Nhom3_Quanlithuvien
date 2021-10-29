@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- Access rule: Mượn/trả sách -->
+        <record id="lib_manager_call_card_reader_rule" model="ir.rule">
+            <field name="name">Lib: Call Card - Reader access view only self data</field>
+            <field name="model_id" ref="lib_management.model_call_card"/>
+            <field name="domain_force">[('reader_id','=',False), ('reader_id','=',user.partner_id.id)]</field>
+            <field name="groups" eval="[(4, ref('base.group_user')), (4, ref('lib_management.lib_reader_group'))]"/>
+        </record>
+
+        <record id="lib_manager_call_card_manager_rule" model="ir.rule">
+            <field name="name">Lib: Call Card - Manager access data</field>
+            <field name="model_id" ref="lib_management.model_call_card"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('lib_management.lib_librarian_group')), (4, ref('lib_management.lib_admin_group'))]"/>
+        </record>
+        <!-- Access rule: Vi phạm-->
+        <record id="lib_manager_violation_reader_rule" model="ir.rule">
+            <field name="name">Lib: Violation - Reader access view only self data</field>
+            <field name="model_id" ref="lib_management.model_violation"/>
+            <field name="domain_force">[('reader_id','=',False), ('reader_id','=',user.partner_id.id)]</field>
+            <field name="groups" eval="[(4, ref('base.group_user')), (4, ref('lib_management.lib_reader_group'))]"/>
+        </record>
+
+        <record id="lib_manager_violation_manager_rule" model="ir.rule">
+            <field name="name">Lib: Violation - Manager access data</field>
+            <field name="model_id" ref="lib_management.model_violation"/>
+            <field name="domain_force">[(1,'=',1)]</field>
+            <field name="groups" eval="[(4, ref('lib_management.lib_librarian_group')), (4, ref('lib_management.lib_admin_group'))]"/>
+        </record>
+    </data>
+</odoo>
