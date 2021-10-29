@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Sequence: Phiếu mượn -->
+        <record id="seq_call_card" model="ir.sequence">
+            <field name="name">Call Card</field>
+            <field name="code">call.card</field>
+            <field name="prefix">PM/%(year)s/</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_violation" model="ir.sequence">
+            <field name="name">Violation</field>
+            <field name="code">violation</field>
+            <field name="prefix">V/%(year)s/</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

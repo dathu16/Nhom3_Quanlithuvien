@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_call_card_reader,access.call.card.model.reader,model_call_card,lib_management.lib_reader_group,1,0,0,0
+access_call_card_librarian,access.call.card.model.librarian,model_call_card,lib_management.lib_librarian_group,1,1,1,1
+access_call_card_admin,access.call.card.model.admin,model_call_card,lib_management.lib_admin_group,1,1,1,1
+
+access_call_card_details_reader,access.call.card.detail.model.reader,model_call_card_details,lib_management.lib_reader_group,1,0,0,0
+access_call_card_details_librarian,access.call.card.detail.model.librarian,model_call_card_details,lib_management.lib_librarian_group,1,1,1,1
+access_call_card_details_admin,access.call.card.detail.model.admin,model_call_card_details,lib_management.lib_admin_group,1,1,1,1
