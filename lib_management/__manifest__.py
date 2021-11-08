@@ -21,13 +21,21 @@
         # SECURITY
         'security/security_groups.xml',
         'security/ir.model.access.csv',
+        'security/record_rules.xml',
         # DATA
+        'data/ir_sequence_data.xml',
         # VIEWS
         'views/assets.xml',
+        'views/shelve_book_views.xml',
         'views/book_views.xml',
+        'views/book_category_views.xml',
+        'views/reader_views.xml',
         'views/call_card_views.xml',
+        'views/violation_views.xml',
         # .. reports
+        'views/report_views.xml',
         # .. wizards
+        'wizard/confirm_return_book_wizard_views.xml',
         # Menus
         'menu/menu_views.xml',
     ],
@@ -35,5 +43,5 @@
     'images': [],
     'installable': True,
     'auto_install': False,
-    'application': True,
+    'application': False,
 }

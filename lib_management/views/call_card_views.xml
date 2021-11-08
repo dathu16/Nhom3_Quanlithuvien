@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="call_card_tree_view" model="ir.ui.view">
+            <field name="name">call.card.tree.view</field>
+            <field name="model">call.card</field>
+            <field name="arch" type="xml">
+                <tree string="Phiếu mượn sách">
+                    <field name="code"/>
+                    <field name="reader_code"/>
+                    <field name="reader_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="due_date"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="call_card_search_view" model="ir.ui.view">
+            <field name="name">call.card.search.view</field>
+            <field name="model">call.card</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm phiếu mượn sách">
+                    <field name="code"/>
+                    <field name="reader_code"/>
+                    <field name="reader_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="due_date"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="call_card_form_view" model="ir.ui.view">
+            <field name="name">call.card.form.view</field>
+            <field name="model">call.card</field>
+            <field name="arch" type="xml">
+                <form string="Phiếu mượn sách">
+                    <header>
+                        <button name="action_confirm_return_book"
+                                groups="lib_management.lib_librarian_group,lib_management.lib_admin_group"
+                                string="Xác nhận trả" states="confirmed" type="object" class="oe_highlight"/>
+                        <button name="action_confirm_violate"
+                                groups="lib_management.lib_librarian_group,lib_management.lib_admin_group"
+                                string="Vi Phạm" states="confirmed" type="object"/>
+                        <field name="state" widget="statusbar" statusbar_visible="confirmed,returned"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label class="oe_edit_only" for="code" string="Mã số phiếu mượn"/>
+                            <h1><field name="code" readonly="1" force_save="1"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="reader_id" attrs="{'readonly': [('state', '=', 'returned')]}"/>
+                            </group>
+                            <group>
+                                <field name="start_date" attrs="{'readonly': [('state', '=', 'returned')]}"/>
+                                <field name="due_date" attrs="{'readonly': [('state', '=', 'returned')]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Thông tin mượn sách">
+                                <field name="line_ids" attrs="{'readonly': [('state', '=', 'returned')]}">
+                                    <tree editable="bottom">
+                                        <field name="card_id" invisible="1"/>
+                                        <field name="book_id"/>
+                                        <field name="book_code"/>
+                                        <field name="publishing_company"/>
+                                        <field name="description"/>
+                                    </tree>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <group>
+                                                    <field name="card_id" invisible="1"/>
+                                                    <field name="book_id"/>
+                                                    <field name="book_code"/>
+                                                </group>
+                                                <group>
+                                                    <field name="publishing_company"/>
+                                                </group>
+                                            </group>
+                                            <label for="description" string="Ghi chú"/>
+                                            <field name="description"/>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+                            <page string="Thông tin trả sách">
+                                <group>
+                                    <group>
+                                        <field name="end_date" readonly="1" force_save="1"/>
+                                        <field name="manager_id" readonly="1" force_save="1"/>
+                                    </group>
+                                    <group>
+                                        <field name="return_note" readonly="1" force_save="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                        <label for="description" string="Ghi chú mượn"/>
+                        <field name="description" attrs="{'readonly': [('state', '=', 'returned')]}"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="call_card_action_view" model="ir.actions.act_window">
+            <field name="name">Phiếu mượn sách</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">call.card</field>
+            <field name="search_view_id" ref="lib_management.call_card_search_view"/>
+            <field name="view_id" ref="lib_management.call_card_tree_view"/>
+        </record>
+    </data>
+</odoo>
